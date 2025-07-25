@@ -17,6 +17,36 @@
         .highlight {
             background-color: yellow !important;
         }
+        .expertise-pills {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            margin-top: 10px;
+            margin-bottom: 10px;
+        }
+        .pill {
+            background: #e0f3ff;
+            color: #f84e4e;
+            border-radius: 20px;
+            padding: 4px 8px;
+            font-size: 1.25rem;
+            font-weight: 500;
+            display: inline-block;
+        }
+
+        .pill-blue    { background: #e0f3ff; color: #1877f2; }
+        .pill-green   { background: #e7fae7; color: #21a019; }
+        .pill-orange  { background: #fff6e0; color: #ff9800; }
+        .pill-purple  { background: #f3e7fa; color: #a259e7; }
+        .pill-pink    { background: #ffe0f3; color: #e91e63; }
+        .pill-teal    { background: #e0fafa; color: #009688; }
+        .pill-cyan    { background: #e0f7fa; color: #00bcd4; }
+        .pill-lime    { background: #f9ffe0; color: #afb42b; }
+        .pill-indigo  { background: #e0e7ff; color: #3f51b5; }
+        .pill-brown   { background: #fbeee6; color: #795548; }
+        .pill-gray    { background: #f2f2f2; color: #616161; }
+        .pill-amber   { background: #fff8e1; color: #ffc107; }
+
     </style>
 </head>
 <body>
@@ -37,16 +67,7 @@
                     <!-- Header -->
                     <div class="card-header">
                         <h1>Skill Registration</h1>
-                        <p>Name of Skill will go here</p>
-
-                        <!-- Progress Indicator -->
-                        <div class="progress-indicator">
-                            <div class="progress-step active">1</div>
-                            <div class="progress-line"></div>
-                            <div class="progress-step">2</div>
-                            <div class="progress-line"></div>
-                            <div class="progress-step">3</div>
-                        </div>
+                        <p th:text="${courseMentor.course.name}">Name of Skill will go here</p>
                     </div>
 
                     <!-- Body -->
@@ -71,7 +92,19 @@
                                 </div>
                                 <div class="summary-item">
                                     <span>Subject</span>
-                                    <span th:each="tag : ${tagList}" th:text="${tag.title}"></span>
+                                    <div class="expertise-pills">
+                                            <span th:if="${tagList.isEmpty()}"
+                                                  class="pill pill-gray">
+                                                None
+                                            </span>
+
+                                        <span th:each="exp, stat : ${tagList}"
+                                              th:if="${stat.index < 3}"
+                                              class="pill"
+                                              th:text="${exp.title}">
+                                                Expertise
+                                            </span>
+                                    </div>
                                 </div>
                                 <div class="summary-item">
                                     <span>Mentor</span>
@@ -95,8 +128,25 @@
 
                                 <div class="mentor-info">
                                     <div class="mentor-profile">
-                                        <img src="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNjAiIGhlaWdodD0iNjAiIHZpZXdCb3g9IjAgMCAyNCAyNCIgZmlsbD0iIzg2QTc4OCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPHBhdGggZD0iTTEyIDJDMTMuMSAyIDE0IDIuOSAxNCA0QzE0IDUuMSAxMy4xIDYgMTIgNkMxMC45IDYgMTAgNS4xIDEwIDRDMTAgMi45IDEwLjkgMiAxMiAyWk0yMSAxOVYyMEgzVjE5QzMgMTYuNzkgNi41OCAxNSAxMiAxNUMxNy40MiAxNSAyMSAxNi43OSAyMSAxOVoiLz4KPC9zdmc+"
-                                             alt="Mentor Avatar" class="mentor-avatar">
+                                        <img
+                                                th:if="${courseMentor.mentor.avatar != null}"
+                                                th:src="@{/mentors/{id}/avatar(id=${course_mentor.mentor.id})}"
+                                                width="370"
+                                                height="248"
+                                                loading="lazy"
+                                                alt="Mentor Avatar"
+                                                class="mentor-avatar"
+                                        />
+
+                                        <img
+                                                th:if="${courseMentor.mentor.avatar == null}"
+                                                th:src="@{/assets/images/mentor.png}"
+                                                width="370"
+                                                height="248"
+                                                loading="lazy"
+                                                alt="Default Avatar"
+                                                class="mentor-avatar"
+                                        />
                                         <div class="mentor-details">
                                             <h4 th:text="${courseMentor.mentor.fullName}">John Doe</h4>
                                             <div class="mentor-rating">

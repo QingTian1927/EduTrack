@@ -73,17 +73,17 @@
         }
 
         .product-table td {
-            background-color: #fff3e0;
+            background-color: rgba(253, 151, 156, 0.3);
             padding: 14px;
             font-size: 14px;
             color: #444;
             text-align: center;
             box-shadow: 0 2px 6px rgba(255, 167, 38, 0.08);
-            border-bottom: 1px solid #ffe0b2;
+            border-bottom: 1px solid rgba(253, 151, 156, 0.51);
         }
 
         .product-table tr:hover td {
-            background-color: #ffe0b2;
+            background-color: rgba(253, 151, 156, 0.51);
             transition: background-color 0.3s ease;
         }
 
@@ -248,7 +248,7 @@
                         <th>Total slots</th>
                         <th>Paid Price</th>
                         <th>Created Date</th>
-                        <th style="min-width: 10em;" th:if="${param.status[0] == null or param.status[0] == 'PENDING'}">ACTION</th>
+                        <th style="min-width: 10em;">ACTION</th>
                     </tr>
                     </thead>
                     <tbody>
@@ -258,7 +258,7 @@
                         <td th:text="${item.totalSlots}">39.02</td>
                         <td th:text="${item.courseMentor.price * item.totalSlots}"></td>
                         <td th:text="${item.createdDate}">A/22</td>
-                        <td  th:if="${param.status[0] == null or param.status[0] == 'PENDING'}">
+                        <td>
                             <form th:action="@{/mentor/censor-class/{eid}(eid=${item.id})}">
                                 <button class="more-btn" name="action" value="view"><i class="fa fa-arrow-right"
                                                                                        aria-hidden="true"></i> View</button>

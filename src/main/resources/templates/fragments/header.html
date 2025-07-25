@@ -25,6 +25,10 @@
                 </li>
 
                 <li class="navbar-item" th:if="${session.loggedInUser == null or !isMentor}">
+                    <a th:href="@{/courses}" class="navbar-link title-sm" data-nav-link>CourseMentor</a>
+                </li>
+
+                <li class="navbar-item" th:if="${session.loggedInUser == null or !isMentor}">
                     <a th:href="@{/mentors}" class="navbar-link title-sm" data-nav-link>Mentors</a>
                 </li>
 

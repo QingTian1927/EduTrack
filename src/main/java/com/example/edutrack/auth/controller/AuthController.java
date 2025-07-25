@@ -232,7 +232,7 @@ public class AuthController {
                 String role = user.getRole().name().toLowerCase();
                 session.setAttribute("role", role);
                 if("admin".equals(role)){
-                    return "redirect:/admin";
+                    return "redirect:/admin/dashboard";
                 }else if("manager".equals(role)){
                     return "redirect:/manager/dashboard";
                 }

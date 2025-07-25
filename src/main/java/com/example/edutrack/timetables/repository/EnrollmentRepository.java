@@ -72,7 +72,7 @@ public interface EnrollmentRepository extends JpaRepository<Enrollment, Long> {
                  AND e.totalSlots > (
                     SELECT COUNT(es)
                     FROM EnrollmentSchedule es
-                    WHERE es.enrollment = e AND es.attendance = 'PRESENT' AND es.report = true
+                    WHERE es.enrollment = e AND es.attendance = 'PRESENT' AND es.report = false
                 )
             """)
     List<Enrollment> findOngoingEnrollments(Mentor mentor);
@@ -85,7 +85,7 @@ public interface EnrollmentRepository extends JpaRepository<Enrollment, Long> {
                  AND e.totalSlots <= (
                     SELECT COUNT(es)
                     FROM EnrollmentSchedule es
-                    WHERE es.enrollment = e AND es.attendance = 'PRESENT' AND es.report = true
+                    WHERE es.enrollment = e AND es.attendance = 'PRESENT' AND es.report = false
                 )
             """)
     List<Enrollment> findCompletedEnrollments(Mentor mentor);
