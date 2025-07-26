@@ -70,7 +70,7 @@ public class ManagerStatsServiceImpl implements ManagerStatsService {
 
                 // Tính toán doanh thu trung bình per mentor
                 if (activeMentors != null && activeMentors > 0) {
-                        stats.setAvgRevenuePerMentor(totalRevenue / activeMentors);
+                        stats.setAvgRevenuePerMentor(-totalRevenue / activeMentors);
                 } else {
                         stats.setAvgRevenuePerMentor(0.0);
                 }
