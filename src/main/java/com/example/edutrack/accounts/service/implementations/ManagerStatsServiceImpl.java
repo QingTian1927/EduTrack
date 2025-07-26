@@ -58,7 +58,7 @@ public class ManagerStatsServiceImpl implements ManagerStatsService {
                 if (previousRevenue == null)
                         previousRevenue = 0.0;
 
-                Double revenueGrowth = calculateGrowthRate(totalRevenue, -previousRevenue);
+                Double revenueGrowth = calculateGrowthRate(-totalRevenue, -previousRevenue);
                 stats.setRevenueGrowth(revenueGrowth);
 
                 // Tính toán số mentor hoạt động (chỉ tính ACCEPTED)
