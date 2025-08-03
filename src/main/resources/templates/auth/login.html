@@ -30,7 +30,7 @@
             <div th:if="${error}" style="color: red;">[[${error}]]</div>
             <div class="form-group">
                 <label for="email" class="login__label">Email</label>
-                <input type="email" id="email" name="email" required th:value="${email != null} ? ${email} : ''"
+                <input type="email" id="email" name="email" required th:value="${param.email != null} ? ${param.email} : ''"
                        placeholder=" " class="login__input">
             </div>
 
@@ -41,7 +41,7 @@
 
             <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem; font-size: 1.25rem;">
                 <label class="login__remember" style="display: flex; align-items: center; gap: 0.4rem;">
-                    <input type="checkbox" name="rememberMe" style="transform: scale(1.2);"> Remember Me
+                    <input type="checkbox" checked name="rememberMe" style="transform: scale(1.2);"> Remember Me
                 </label>
                 <a href="/forgot-password" class="login__forgot" style="font-size: 1.2rem;">Forgot your password?</a>
             </div>

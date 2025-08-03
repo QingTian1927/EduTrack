@@ -33,7 +33,7 @@
             <div th:if="${error}" style="color: red;">[[${error}]]</div>
             <div class="text-input">
                 <i class="ri-user-fill"></i>
-                <input type="email" name="email" placeholder="Email" required>
+                <input type="email" name="email" placeholder="Email" th:value="${param.email != null} ? ${param.email} : ''" required>
             </div>
             <div class="text-input">
                 <i class="ri-lock-fill"></i>
@@ -41,14 +41,11 @@
             </div>
             <div style="width: 70%;">
                 <label class="login__remember">
-                    <input type="checkbox" name="rememberMe" value="on"><span class="remember">Remember Me</span>
+                    <input type="checkbox" name="rememberMe" checked value="on"><span class="remember">Remember Me</span>
                 </label>
             </div>
             <button class="login-btn" type="submit">LOGIN</button>
         </form>
-
-
-
 
     </div>
 </div>
