@@ -90,7 +90,7 @@ public class MenteeController {
     public String showDashboard(HttpSession session, Model model) {
         UUID menteeId = getSessionMentee(session);
         if (menteeId == null) {
-            return "redirect:/404";
+            return "redirect:/";
         }
         boolean isAllCompleted = dashboardService.isAllCoursesCompleted(menteeId);
         String nextSessionTime = dashboardService.getNextSessionTime(menteeId);
@@ -138,7 +138,7 @@ public class MenteeController {
             Model model
     ) {
         UUID menteeId = getSessionMentee(session);
-        if (menteeId == null) return "redirect:/404";
+        if (menteeId == null) return "redirect:/";
 
         List<Course> enrolledCourses = enrollmentService.findCourseByMenteeIdAndEnrollmentStatus(menteeId);
         if (enrolledCourses == null || enrolledCourses.isEmpty()) {
@@ -715,14 +715,25 @@ public class MenteeController {
             }
         }
 
-        Optional<LocalDate> earliestStartDateOpt = mentorAvailableTimeService.findEarliestStartDateByMentorId(mentorId);
-        LocalDate mentorStartDate = earliestStartDateOpt.orElse(today);
-        Optional<EnrollmentSchedule> firstScheduleOpt = enrollmentScheduleService.findFirstScheduleForEnrollment(enrollmentSchedule.getEnrollment());
-        LocalDate enrollmentStartDate = firstScheduleOpt.map(EnrollmentSchedule::getDate).orElse(tomorrow);
-        Slot enrollmentStartSlot = firstScheduleOpt.map(EnrollmentSchedule::getSlot).orElse(null);
-        LocalDate minAllowedDate = mentorStartDate.isBefore(enrollmentStartDate) ? mentorStartDate : enrollmentStartDate;
-        LocalDate lockDate = minAllowedDate.isAfter(today) ? minAllowedDate : tomorrow;
+// Lấy ngày bắt đầu sớm nhất của mentor, nếu không có thì mặc định là hôm nay
+        LocalDate mentorStartDate = mentorAvailableTimeService
+                .findEarliestStartDateByMentorId(mentorId)
+                .orElse(today);
 
+// Lấy ngày bắt đầu thực tế của enrollment, nếu không có thì mặc định là hôm nay
+        Optional<EnrollmentSchedule> firstScheduleOpt = enrollmentScheduleService
+                .findFirstScheduleForEnrollment(enrollmentSchedule.getEnrollment());
+        LocalDate enrollmentStartDate = firstScheduleOpt.map(EnrollmentSchedule::getDate).orElse(today);
+        Slot enrollmentStartSlot = firstScheduleOpt.map(EnrollmentSchedule::getSlot).orElse(null);
+
+// Tìm ngày muộn nhất trong 3 mốc để làm ngày khóa lịc
+        LocalDate lockDate = today;
+        if (mentorStartDate.isAfter(lockDate)) {
+            lockDate = mentorStartDate;
+        }
+        if (enrollmentStartDate.isAfter(lockDate)) {
+            lockDate = enrollmentStartDate;
+        }
         for (LocalDate day : daysInWeek) {
             if (day.isBefore(lockDate)) {
                 for (Slot slot : Slot.values()) {

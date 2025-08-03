@@ -116,6 +116,19 @@
                             <i class="fa fa-arrow-right" style="margin-left: 5px;"></i>
                         </a>
                     </div>
+
+                    <div class="dashboard-card">
+                        <div class="card-header">
+                            <i class="fa fa-bookmark card-icon" aria-hidden="true"></i>
+                            <h3 class="card-title">Bookmarks</h3>
+                        </div>
+                        <div class="stat-label">View your favorite courses quickly and easily</div>
+                        <a href="#" class="view-link" th:href="@{/bookmark/list}">
+                            View
+                            <i class="fa fa-arrow-right" style="margin-left: 5px;"></i>
+                        </a>
+                    </div>
+
                     <div class="dashboard-card" th:if="${havingPending}">
                         <div class="card-header">
                             <i class="fa fa-users card-icon"></i>

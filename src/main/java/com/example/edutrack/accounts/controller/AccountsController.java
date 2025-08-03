@@ -155,9 +155,9 @@ public class AccountsController {
 
                 // Validate interests for mentees
                 Mentee mentee = null;
-                try{
+                try {
                         mentee = menteeService.getMenteeById(id);
-                }catch (Exception e){
+                } catch (Exception e) {
                         mentee = null;
                 }
                 if (mentor == null && mentee != null) {
@@ -206,16 +206,19 @@ public class AccountsController {
                 User loggedInUser = (User) session.getAttribute("loggedInUser");
                 String id = loggedInUser.getId().toString();
                 userService.updateAvatar(id, file);
+                // Update the session attribute to reflect the new avatar
+                User updatedUser = userService.getUserById(id);
+                session.setAttribute("loggedInUser", updatedUser);
                 return "redirect:/profile";
         }
 
-        @GetMapping("/avatar/{id}")
-        public void getAvatar(@PathVariable String id, HttpServletResponse response) throws IOException {
-                User user = userService.getUserById(id);
+        @GetMapping("/avatar")
+        public void getAvatar(HttpSession session, HttpServletResponse response) throws IOException {
+                User loggedInUser = (User) session.getAttribute("loggedInUser");
 
-                if (user != null && user.getAvatar() != null) {
+                if (loggedInUser != null && loggedInUser.getAvatar() != null) {
                         response.setContentType("image/jpeg");
-                        response.getOutputStream().write(user.getAvatar());
+                        response.getOutputStream().write(loggedInUser.getAvatar());
                 } else {
                         response.sendRedirect("/assets/images/default-avatar.svg");
                         return;

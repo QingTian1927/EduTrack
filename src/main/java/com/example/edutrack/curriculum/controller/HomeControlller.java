@@ -76,8 +76,7 @@ public class HomeControlller {
         LandingPageConfig config = landingPageConfigService.getConfigByRole(MenteeLandingRole.GUEST);
         populateCommonModel(model, config);
 
-        model.addAttribute("headerCTA", "Sign Up");
-        model.addAttribute("headerCTALink", "/signup");
+
         model.addAttribute("userType", "guest");
         model.addAttribute("showSchedulesLink", false);
         model.addAttribute("showTracker", false);

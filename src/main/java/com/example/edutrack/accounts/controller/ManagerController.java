@@ -412,7 +412,7 @@ public class ManagerController {
 
             model.addAttribute("errorMessage", "Please fix the validation errors below.");
             model.addAttribute("role", role.name());
-            model.addAttribute("activeTab", activeTab); // Đảm bảo activeTab được truyền đúng
+            model.addAttribute("activeTab", activeTab);
             model.addAttribute("availableEndpoints", endpointRegistry.getGetEndpoints());
             model.addAttribute("isPersonalized", landingPageConfigService.isPersonalizationEnabled());
 

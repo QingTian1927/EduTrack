@@ -37,10 +37,6 @@
                         data-nav-link>Dashboard</a>
                 </li>
 
-                <li class="navbar-item" th:if="${session.loggedInUser != null and !isMentor}">
-                    <a th:href="@{/bookmark/list}" class="navbar-link title-sm" data-nav-link>Bookmark</a>
-                </li>
-
                 <li class="navbar-item" th:if="${session.loggedInUser != null and isMentor}">
                     <a th:href="@{/mentor/cv/create}" class="navbar-link title-sm" data-nav-link>My CV</a>
                 </li>
@@ -65,7 +61,11 @@
 
                 <a th:href="@{/logout}" class="btn btn-secondary">Logout</a>
                 <a th:href="@{/profile}" style="text-decoration: none;">
-                    <img id="top-avatar" th:src="@{/avatar}" alt="Avatar" class="top-avatar">
+                    <img th:if="${session.loggedInUser.avatar == null}"
+                         th:id="'top-avatar'" th:src="@{/assets/images/avatar.png}" alt="Avatar" class="top-avatar">
+
+                    <img th:if="${session.loggedInUser.avatar != null}"
+                         th:id="'top-avatar'" th:src="@{/avatar/{id}(id = ${session.loggedInUser.id})}" alt="Avatar" class="top-avatar">
                 </a>
             </div>
         </div>
